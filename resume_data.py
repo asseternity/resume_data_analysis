@@ -1,4 +1,4 @@
-# Setting up my environment
+### SET UP ENVIRONMENT
 
 import os
 import kagglehub
@@ -22,7 +22,7 @@ result = pandasql.sqldf(query, locals())
 
 # print(result.head()) # head() prints first five rows
 
-# Data cleaning
+### DATA CLEANING
 
 import resume_data_cleaner as rdc
 
@@ -35,5 +35,26 @@ skills_table_clean = rdc.skills_data_cleaner(skills_table)
 
 # print(resume_table_clean.head())
 
-# Well then, combine pandas and sql to find cool shit with SOME NUMBERS
+### USE SQL TO FIND COOL STUFF WITH  SOME NUMBERS
 
+# 1. Pie chart: people with "developer" in the title - education title includes "computer science", does not, or unknown?
+
+education_query = "SELECT exp.person_id, exp.title, edu.program, CASE WHEN edu.program LIKE '%computer science%' THEN 'Computer Science' WHEN edu.program IS NULL OR edu.program = 'Unknown' THEN 'Unknown' ELSE 'Other' END AS 'degree' FROM experience_table_clean AS exp JOIN education_table_clean AS edu ON exp.person_id = edu.person_id WHERE exp.title LIKE '%developer'"
+education_query_result = pandasql.sqldf(education_query, locals())
+
+### USE PANDAS TO UNDERSTAND / COUNT / STATISTICS THE DATA
+
+degree_counts = education_query_result['degree'].value_counts()
+# print(degree_counts)
+
+### VISUALIZE
+
+import matplotlib.pyplot as plt
+
+degree_counts.plot(kind='pie',  # Plot as a pie chart
+                   autopct='%1.1f%%',  # Display percentage on slices
+                   startangle=90,  # Rotate start angle of the chart
+                   legend=False)  # Disable legend
+plt.title("Degree Distribution for Developers") # Set chart title
+plt.ylabel("")  # Remove label for the y-axis
+plt.show() # Display the plot

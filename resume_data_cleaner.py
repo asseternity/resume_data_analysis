@@ -86,7 +86,7 @@ def person_skills_data_cleaner(table):
 
 def skills_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['skill'] = table['email'].fillna('Unknown')
+    table['skill'] = table['skill'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
