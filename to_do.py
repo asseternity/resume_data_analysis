@@ -3,7 +3,7 @@
 # v set up a Python environment with Pandas, Matplotlib, Seaborn, NumPy, and Jupyter Notebooks
 # v figure out how to utilize SQL / join tables in Python environments
 # v clean the data (handle missing values, ensure correct data types)
-# do the above for all tables available in the dataset
+# v do the above for all tables available in the dataset
 # combine pandas and sql to find cool shit with SOME NUMBERS
 # do some correlated and non-correlated subqueries
 # use Pandas for statistical analysis: data.describe(), data.corr()

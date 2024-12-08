@@ -19,9 +19,7 @@ def resume_data_cleaner(table):
 
 def abilities_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['email'] = table['email'].fillna('Unknown')
-    table['phone'] = table['phone'].fillna('Unknown')
-    table['linkedin'] = table['linkedin'].fillna('Unknown')
+    table['ability'] = table['ability'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
@@ -36,9 +34,10 @@ def abilities_data_cleaner(table):
 
 def education_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['email'] = table['email'].fillna('Unknown')
-    table['phone'] = table['phone'].fillna('Unknown')
-    table['linkedin'] = table['linkedin'].fillna('Unknown')
+    table['institution'] = table['institution'].fillna('Unknown')
+    table['program'] = table['program'].fillna('Unknown')
+    table['start_date'] = table['start_date'].fillna('Unknown')
+    table['location'] = table['location'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
@@ -53,9 +52,11 @@ def education_data_cleaner(table):
 
 def experience_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['email'] = table['email'].fillna('Unknown')
-    table['phone'] = table['phone'].fillna('Unknown')
-    table['linkedin'] = table['linkedin'].fillna('Unknown')
+    table['title'] = table['title'].fillna('Unknown')
+    table['firm'] = table['firm'].fillna('Unknown')
+    table['start_date'] = table['start_date'].fillna('Unknown')
+    table['end_date'] = table['end_date'].fillna('Unknown')
+    table['location'] = table['location'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
@@ -70,9 +71,7 @@ def experience_data_cleaner(table):
 
 def person_skills_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['email'] = table['email'].fillna('Unknown')
-    table['phone'] = table['phone'].fillna('Unknown')
-    table['linkedin'] = table['linkedin'].fillna('Unknown')
+    table['skill'] = table['skill'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
@@ -87,9 +86,7 @@ def person_skills_data_cleaner(table):
 
 def skills_data_cleaner(table):
     # Fill missing values in specific columns with "Unknown"
-    table['email'] = table['email'].fillna('Unknown')
-    table['phone'] = table['phone'].fillna('Unknown')
-    table['linkedin'] = table['linkedin'].fillna('Unknown')
+    table['skill'] = table['email'].fillna('Unknown')
 
     # Drop rows with any missing values (if there are still any)
     table_no_miss = table.dropna()
