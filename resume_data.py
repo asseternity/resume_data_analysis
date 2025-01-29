@@ -48,6 +48,7 @@ degree_counts = education_query_result['degree'].value_counts()
 # print(degree_counts)
 
 ### VISUALIZE
+
 import matplotlib.pyplot as plt
 
 degree_counts.plot(kind='pie',  # Plot as a pie chart
