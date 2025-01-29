@@ -7,7 +7,7 @@ import pandasql
 
 path = kagglehub.dataset_download("suriyaganesh/resume-dataset-structured")
 
-print(os.listdir(path))
+# print(os.listdir(path)) # find out what files or folders the dataset has
 
 resume_table = pandas.read_csv(f"{path}/01_people.csv");
 abilities_table = pandas.read_csv(f"{path}/02_abilities.csv");
@@ -39,7 +39,9 @@ skills_table_clean = rdc.skills_data_cleaner(skills_table)
 
 # 1. Pie chart: people with "developer" in the title - education title includes "computer science", does not, or unknown?
 
-education_query = "SELECT exp.person_id, exp.title, edu.program, CASE WHEN edu.program LIKE '%computer science%' THEN 'Computer Science' WHEN edu.program IS NULL OR edu.program = 'Unknown' THEN 'Unknown' ELSE 'Other' END AS 'degree' FROM experience_table_clean AS exp JOIN education_table_clean AS edu ON exp.person_id = edu.person_id WHERE exp.title LIKE '%developer'"
+with open('education_query.sql') as f:
+    education_query = f.read()
+
 education_query_result = pandasql.sqldf(education_query, locals())
 
 ### USE PANDAS TO UNDERSTAND / COUNT / STATISTICS THE DATA
@@ -52,7 +54,7 @@ degree_counts = education_query_result['degree'].value_counts()
 import matplotlib.pyplot as plt
 
 degree_counts.plot(kind='pie',  # Plot as a pie chart
-                   autopct='%1.1f%%',  # Display percentage on slices
+                   autopct=lambda p: f'{int(p * degree_counts.sum() / 100)} ({p:.1f}%)',  # Display both count and percentage
                    startangle=90,  # Rotate start angle of the chart
                    legend=False)  # Disable legend
 plt.title("Degree Distribution for Developers") # Set chart title

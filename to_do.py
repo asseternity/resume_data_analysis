@@ -7,8 +7,8 @@
 # v use sql to find cool shit with SOME NUMBERS
 # v use Pandas for statistical analysis: data.describe(), data.corr()
 # v create visualizations of relationships with Matplotlib/Seaborn (scatter plots, bar charts, histograms).
-# do more SQL queries and visualizations - a useful analysis of CAREER TRANSITIONS! How many had law degrees, if any?
-# do some correlated and non-correlated subqueries
+# v do more SQL queries and visualizations - a useful analysis of CAREER TRANSITIONS! How many had law degrees, if any?
+# remember and do some correlated and non-correlated subqueries
 # compile everything into a Jupyter Notebook
 # deploy
 
