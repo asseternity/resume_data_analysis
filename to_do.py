@@ -8,10 +8,10 @@
 # v use Pandas for statistical analysis: data.describe(), data.corr()
 # v create visualizations of relationships with Matplotlib/Seaborn (scatter plots, bar charts, histograms).
 # v do more SQL queries and visualizations - a useful analysis of CAREER TRANSITIONS! How many had law degrees, if any?
-# do more visualizations: (1) breakdown of positions, like which degrees do data scientists have? (2) which roles do law degrees have?
-# find and incorporate more job or resume data from kagglehub
 # understand how to do visualizations
 # remember and do some correlated and non-correlated subqueries
+# do more visualizations: (1) breakdown of positions, like which degrees do data scientists have? (2) which roles do law degrees have?
+# find and incorporate more job or resume data from kagglehub
 # compile everything into a Jupyter Notebook
 # deploy
 
