@@ -8,12 +8,22 @@
 # v use Pandas for statistical analysis: data.describe(), data.corr()
 # v create visualizations of relationships with Matplotlib/Seaborn (scatter plots, bar charts, histograms).
 # v do more SQL queries and visualizations - a useful analysis of CAREER TRANSITIONS! How many had law degrees, if any?
-# understand how to do visualizations
-# remember and do some correlated and non-correlated subqueries
-# do more visualizations: (1) breakdown of positions, like which degrees do data scientists have? (2) which roles do law degrees have?
-# find and incorporate more job or resume data from kagglehub
+# v come up with: (1) what more visualizations can I do for this project and (2) how will correlated and non-correlated subqueries help here 
+# last role of lawyers before going into tech
+# first role of lawyers in tech
+# which field of IT do lawyers go into?
+# how many are law firm?
+# make SQL queries about the above
+# understand how to do visualizations and visualize the above
 # compile everything into a Jupyter Notebook
-# deploy
+# deploy somewhere
+
+# *--- HERE IS WHAT DATA SCIENCE IS: ---*
+# 1) find some data in csv / on kaaggle / from an API / wherever
+# 2) clean the data from duplicates, from Nulls
+# 3) come up with an interesting question for the data
+# 4) write an elaborate SQL query to get a table with that information
+# 5) visualize that information with plt
 
 # PROJECT 2 - machine learning
 # select a machine learning problem
