@@ -90,29 +90,14 @@ SELECT
         WHEN edu.program IS NULL
         OR edu.program = 'unknown' THEN 'Unknown'
         ELSE "Other"
-    END AS 'degree'
+    END AS "degree field"
 FROM
-    experience_table_clean AS exp
-    JOIN education_table_clean AS edu ON exp.person_id = edu.person_id
+    experience_table_clean as exp
+    JOIN education_table_clean as edu ON exp.person_id = edu.person_id
 WHERE
-    exp.title LIKE '%developer'
-    OR exp.title LIKE '%software%'
-    OR exp.title LIKE '%frontend$'
-    OR exp.title LIKE '%backend%'
-    OR exp.title LIKE '%fullstack%'
-    OR exp.title LIKE '%front-end%'
-    OR exp.title LIKE '%back-end%'
-    OR exp.title LIKE '%full-stack%'
-    OR exp.title LIKE '%programmer%'
-    OR exp.title LIKE '%devops%'
-    OR exp.title LIKE '%data engineer%'
-    OR exp.title LIKE '%QA%'
-    OR exp.title LIKE '%UX/UI%'
-    OR exp.title LIKE '%data scien%'
-    OR exp.title LIKE '%data anal%'
-    OR exp.title LIKE '%cloud%'
-    OR exp.title LIKE '%cyber%'
-    OR exp.title LIKE '%web%'
-    OR exp.title LIKE '%system admin%'
-    OR exp.title LIKE '%machine learn%'
-    OR exp.title LIKE '%artificial int%'
+    exp.title LIKE '%lawyer%'
+    OR exp.title LIKE '%legal%'
+    OR exp.title LIKE '%attorney%'
+    OR exp.title LIKE '%solicitor%'
+    OR exp.title LIKE '%barrister%'
+    OR exp.title LIKE '%law%'

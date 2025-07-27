@@ -45,6 +45,9 @@ def education_data_cleaner(table):
     # Standardize column names (lowercase and replace spaces with underscores)
     table_no_miss.columns = table_no_miss.columns.str.lower().str.replace(' ', '_')
 
+    # Make sure 'degree' column is lowercase
+    table_no_miss['program'] = table_no_miss['program'].str.lower()
+
     # Drop duplicate rows
     table_no_miss_no_duplicates = table_no_miss.drop_duplicates()
 
@@ -63,6 +66,9 @@ def experience_data_cleaner(table):
 
     # Standardize column names (lowercase and replace spaces with underscores)
     table_no_miss.columns = table_no_miss.columns.str.lower().str.replace(' ', '_')
+
+    # Make sure 'title' column is lowercase
+    table_no_miss['title'] = table_no_miss['title'].str.lower()
 
     # Drop duplicate rows
     table_no_miss_no_duplicates = table_no_miss.drop_duplicates()

@@ -9,21 +9,46 @@
 # v create visualizations of relationships with Matplotlib/Seaborn (scatter plots, bar charts, histograms).
 # v do more SQL queries and visualizations - a useful analysis of CAREER TRANSITIONS! How many had law degrees, if any?
 # v come up with: (1) what more visualizations can I do for this project and (2) how will correlated and non-correlated subqueries help here 
-# last role of lawyers before going into tech
-# first role of lawyers in tech
-# which field of IT do lawyers go into?
-# how many are law firm?
-# make SQL queries about the above
+# v Q: which field of IT do lawyers go into?
+# v Q: the opposite - what degrees do lawyers have?
+# v make SQL queries about the above
 # understand how to do visualizations and visualize the above
-# compile everything into a Jupyter Notebook
-# deploy somewhere
+# enhance visualizations with seaborn
+# compile everything into a Jupyter Notebook, e.g.:
+
+# 📊 What Do Lawyers Do in Tech?
+
+## 1. Introduction
+# - Motivation
+# - Dataset source
+
+## 2. Data Loading and Setup
+
+## 3. Data Cleaning (with reusable functions)
+
+## 4. Exploratory Data Analysis (EDA)
+# - 📈 Degree distributions
+# - 🔍 What degrees do lawyers have?
+# - 💼 What jobs do lawyers get in tech?
+
+## 5. Visualizations
+# - Beautiful bar charts with seaborn/matplotlib
+# - Maybe 1 interactive chart (plotly)
+
+## 6. Insights and Conclusions
+# - Summary of findings
+# - Surprising results
+
+## 7. Next Steps (for future work)
 
 # *--- HERE IS WHAT DATA SCIENCE IS: ---*
 # 1) find some data in csv / on kaaggle / from an API / wherever
-# 2) clean the data from duplicates, from Nulls
+# 2) clean the data from duplicates, from Nulls, make all lowercase, combine all wrong data into one category, etc.
 # 3) come up with an interesting question for the data
 # 4) write an elaborate SQL query to get a table with that information
-# 5) visualize that information with plt
+# 5) run the sql query with pandasql.sqldf
+# 6) use pandas to group the data using value_counts(), isin(), etc. 
+# 7) visualize that information with plt
 
 # PROJECT 2 - machine learning
 # select a machine learning problem
