@@ -5,6 +5,8 @@ import pandas
 import pandasql
 import os
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_theme(style="darkgrid")
 
 path = kagglehub.dataset_download("suriyaganesh/resume-dataset-structured")
 
@@ -112,7 +114,7 @@ plt.xlim(0, datapoint_2.max() * 1.3) # Extend the x-axis limit to give space for
 plt.tight_layout() 
 plt.show()
 
-# DATAPOINT 3: THE OPPOSITE OF 1 - WHAT DEGREES DO LAWYERS HAVE?
+# DATAPOINT 3: THE OPPOSITE OF 1 - WHAT DEGREES DO PEOPLE WORKING IN LAW HAVE?
 with open('lawyers_degrees.sql') as f:
     lawyers_degrees_query = f.read()
 
@@ -126,7 +128,7 @@ plt.figure(figsize=(10, 5))
 datapoint_3.plot(kind="barh", color="red", edgecolor="black")
 plt.xlabel("People")
 plt.ylabel("Degree")
-plt.title("Ranked Degree Distribution for Lawyers")
+plt.title("Ranked Degree Distribution for Legal Workers")
 for index, value in enumerate(datapoint_3):
     total = datapoint_3.sum()
     sorted_counts = datapoint_3
