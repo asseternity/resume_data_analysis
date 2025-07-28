@@ -56,37 +56,48 @@ filtered_df = education_query_result[
 ]
 
 # Count and sort the number of people in each degree category
-datapoint_1 = filtered_df['degree'].value_counts().sort_values(ascending=True)
+datapoint_1 = filtered_df['degree'].value_counts().sort_values(ascending=False)
 
-# Create a ranked bar chart
+# What I have so far is pandas.Series
+# A series isn't a table, it's more like a list of tuples with the label and the value 
+# A DataFrame is a table with columns
+# reset_index() converts the Series into a table (dataframe)
+# now we have columns! they need names
+df1 = datapoint_1.reset_index().rename(columns={'index': 'degree', 0: 'count'})
+
+# Create a ranked bar chart with Seaborn
 plt.figure(figsize=(10, 5))  # Set figure size
-datapoint_1.plot(kind='barh', color='skyblue', edgecolor='black')
+sns1 = sns.barplot(
+    data=df1,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
 
 # Add labels and title
-plt.xlabel("Number of People")
-plt.ylabel("Degree")
-plt.title("Ranked Degree Distribution for Developers")
+sns1.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Ranked Degree Distribution for Developers"
+)
 
 # Display value labels on bars
+# In plt and Seaborn, a patch is any filled in shape
+# So, .patches is the list over which we can iterate to do something to every filled in shape (like a bar in a bar graph) 
+total1 = df1['count'].sum()
+for element in sns1.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total1 * 100
+    sns1.text(
+        element.get_width() + total1*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center"
+    )
 
-# To add text label on each bar "total (percentage)", we need to iterate over the counted and sorted data
-for index, value in enumerate(datapoint_1):  
-    total = datapoint_1.sum()
-    sorted_counts = datapoint_1
-    percentage = (value / total) * 100
-    label = f"{value} ({percentage:.1f}%)"
-    x_offset = datapoint_1.max() * 0.01
-    # 'value + integer' positions the text slightly to the right of the bar
-    # 'index' corresponds to the degree title in the sorted order
-    # 'va' ensures the text is centered vertically along the bar
-    # 'fontsize' adjusts the size of the text
-    plt.text(value + x_offset, index, label, va='center', fontsize=10)
-
-plt.grid(axis='x', linestyle='--', alpha=0.7)  # Add a light grid for readability
-plt.xlim(0, datapoint_1.max() * 1.3) # Extend the x-axis limit to give space for labels
+plt.xlim(0, df1['count'].max() * 1.3) # Extend the x-axis limit to give space for labels
 plt.tight_layout() 
-
-# Display the plot
 plt.show()
 
 # DATAPOINT 2: WHAT FIELD OF IT DO LAWYERS GO TO?
@@ -94,23 +105,36 @@ with open('only_lawyers.sql') as f:
     only_lawyers_query = f.read()
 
 only_lawyers_query_result = pandasql.sqldf(only_lawyers_query, locals())
-datapoint_2 = only_lawyers_query_result['field'].value_counts().sort_values(ascending=True)
+datapoint_2 = only_lawyers_query_result['field'].value_counts().sort_values(ascending=False)
+df2 = datapoint_2.reset_index().rename(columns={'index': 'field', 0: 'count'})
 
 plt.figure(figsize=(10, 5))
-datapoint_2.plot(kind="barh", color="green", edgecolor="black")
-plt.xlabel("Number of people")
-plt.ylabel("IT Field")
-plt.title("Fields of IT that law graduates work in")
-for index, value in enumerate(datapoint_2):
-    total = datapoint_2.sum()
-    sorted_counts = datapoint_2
-    percentage = (value / total) * 100
-    label = f"{value} ({percentage:.1f}%)"
-    x_offset = datapoint_2.max() * 0.01
-    plt.text(value + x_offset, index, label, va='center', fontsize=10)
+sns2 = sns.barplot(
+    data=df2,
+    y='count',
+    x='field',
+    orient='v',
+    edgecolor="black"
+)
 
-plt.grid(axis='x', linestyle='--', alpha=0.7)  # Add a light grid for readability
-plt.xlim(0, datapoint_2.max() * 1.3) # Extend the x-axis limit to give space for labels
+sns2.set(
+    xlabel="Number of people",
+    ylabel="IT Field",
+    title="Fields of IT that Law Graduates Work In"
+)
+
+total2 = df2['count'].sum()
+for element in sns2.patches:
+    count = element.get_height()
+    percentage = count/total2 * 100
+    sns2.text(
+        element.get_x() + element.get_width()/2,
+        count + df2['count'].max()*0.01,
+        f"{count} ({percentage:.1f}%)",
+        va="center"
+    )
+
+plt.ylim(0, df2['count'].max() * 1.3) # Extend the x-axis limit to give space for labels
 plt.tight_layout() 
 plt.show()
 
@@ -120,24 +144,37 @@ with open('lawyers_degrees.sql') as f:
 
 lawyers_degrees_query_result = pandasql.sqldf(lawyers_degrees_query, locals())
 filtered_lawyers_degrees = lawyers_degrees_query_result[
-    ~lawyers_degrees_query_result['degree field'].isin(['Unknown',])
+    ~lawyers_degrees_query_result['degree'].isin(['Unknown',])
 ]
-datapoint_3 = filtered_lawyers_degrees['degree field'].value_counts().sort_values(ascending=True)
+datapoint_3 = filtered_lawyers_degrees['degree'].value_counts().sort_values(ascending=False)
+df3 = datapoint_3.reset_index().rename(columns={"index": 'degree', 0: 'count'})
 
 plt.figure(figsize=(10, 5))
-datapoint_3.plot(kind="barh", color="red", edgecolor="black")
-plt.xlabel("People")
-plt.ylabel("Degree")
-plt.title("Ranked Degree Distribution for Legal Workers")
-for index, value in enumerate(datapoint_3):
-    total = datapoint_3.sum()
-    sorted_counts = datapoint_3
-    percentage = (value / total) * 100
-    label = f"{value} ({percentage:.1f}%)"
-    x_offset = datapoint_3.max() * 0.01
-    plt.text(value + x_offset, index, label, va='center', fontsize=10)
+sns3 = sns.barplot(
+    data=df3,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
 
-plt.grid(axis='x', linestyle='--', alpha=0.7)  # Add a light grid for readability
-plt.xlim(0, datapoint_3.max() * 1.3) # Extend the x-axis limit to give space for labels
+sns3.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Ranked Degree Distribution for Legal Workers"
+)
+
+total3 = df3['count'].sum()
+for element in sns3.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total3 * 100
+    sns3.text(
+        element.get_width() + total3*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center"
+    )
+
+plt.xlim(0, df3['count'].max() * 1.3) # Extend the x-axis limit to give space for labels
 plt.tight_layout() 
 plt.show()

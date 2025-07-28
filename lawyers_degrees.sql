@@ -90,7 +90,7 @@ SELECT
         WHEN edu.program IS NULL
         OR edu.program = 'unknown' THEN 'Unknown'
         ELSE "Other"
-    END AS "degree field"
+    END AS "degree"
 FROM
     experience_table_clean as exp
     JOIN education_table_clean as edu ON exp.person_id = edu.person_id
