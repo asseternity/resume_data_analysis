@@ -3,9 +3,9 @@ SELECT
     exp.title,
     edu.program,
     CASE 
-        WHEN exp.title LIKE "%web%"
+        WHEN exp.title LIKE "%web develope%"
         OR exp.title LIKE "%front%"
-        OR exp.title LIKE "%ui developer%"
+        OR exp.title LIKE "%ui develope%"
         OR exp.title LIKE "%ux/ui%" THEN "Web development and Front-End"
         WHEN exp.title LIKE "%security%"
         OR exp.title LIKE "%forensic%"
@@ -37,23 +37,27 @@ FROM
     JOIN education_table_clean as edu ON exp.person_id = edu.person_id
 WHERE
     (
-        exp.title LIKE '%developer%'
+        exp.title LIKE '%developer'
         OR exp.title LIKE '%software%'
-        OR exp.title LIKE '%frontend%'
+        OR exp.title LIKE '%frontend$'
         OR exp.title LIKE '%backend%'
         OR exp.title LIKE '%fullstack%'
         OR exp.title LIKE '%front-end%'
         OR exp.title LIKE '%back-end%'
         OR exp.title LIKE '%full-stack%'
-        OR exp.title LIKE '%programmer%'
+        OR exp.title LIKE '%programme%'
         OR exp.title LIKE '%devops%'
-        OR exp.title LIKE '%data engineer%'
-        OR exp.title LIKE '%QA%'
-        OR exp.title LIKE '%UX/UI%'
+        OR exp.title LIKE '%data enginee%'
+        OR exp.title LIKE '%qa enginee%'
+        OR exp.title LIKE '%ux/ui%'
         OR exp.title LIKE '%data scien%'
-        OR exp.title LIKE '%data anal%'
+        OR exp.title LIKE '%data analy%'
         OR exp.title LIKE '%cloud%'
         OR exp.title LIKE '%cyber%'
+        OR exp.title LIKE '%web develope%'
+        OR exp.title LIKE '%system admin%'
+        OR exp.title LIKE '%machine learn%'
+        OR exp.title LIKE '%artificial int%'
     ) AND (
         edu.program LIKE '%law%'
         OR edu.program LIKE '%legal%'
