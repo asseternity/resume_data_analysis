@@ -135,8 +135,7 @@ for element in sns2.patches:
 
 plt.xticks(rotation=45, ha="right") # Rotate the x-axis labels
 plt.ylim(0, df2['count'].max() * 1.1)
-plt.tight_layout() 
-# plt.show()
+plt.tight_layout()
 
 # DATAPOINT 3: THE OPPOSITE OF 1 - WHAT DEGREES DO PEOPLE WORKING IN LAW HAVE?
 with open('lawyers_degrees.sql') as f:
@@ -217,7 +216,6 @@ for element in sns4.patches:
 
 plt.xlim(0, df4['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout() 
-plt.show()
 
 # DATAPOINT 5: Now we remove secretaries, assistants and paralegals, and see what degrees lawyers have
 only_senior_lawyers = lawyers_jobs_query_result[
@@ -254,7 +252,269 @@ for element in sns5.patches:
 
 plt.xlim(0, df5['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout() 
-plt.show()
 
-# DATAPOINT 6: What spheres do people with legal degrees actually work in?
-# DATAPOINT 7: Break down datapoint 1 by IT job: front-end, back-end, devops, etc.
+# DATAPOINT 6: Break down datapoint 1 by IT job: front-end, back-end, devops, etc.
+# SQL to group compute
+with open('IT_by_field.sql') as f:
+    it_fields_query = f.read()
+
+it_fields_query_result = pandasql.sqldf(it_fields_query, locals())
+filtered_it_fields = it_fields_query_result[
+    ~it_fields_query_result['field'].isin(['Unknown']) & ~it_fields_query_result['degree'].isin(['Unknown'])
+]
+
+# A: Degrees of front-enders
+it_fields_a = filtered_it_fields[filtered_it_fields['field'] == 'Front-end']
+datapoint_6a = it_fields_a['degree'].value_counts().sort_values(ascending=False)
+df6a = datapoint_6a.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns6a = sns.barplot(
+    data=df6a,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns6a.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Front-end Developers"
+)
+
+total6a = df6a['count'].sum()
+for element in sns6a.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total6a * 100
+    sns6a.text(
+        element.get_width() + total6a*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df6a['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout()
+
+# B: Degrees of back-enders
+it_fields_b = filtered_it_fields[filtered_it_fields['field'] == 'Back-end']
+datapoint_6b = it_fields_b['degree'].value_counts().sort_values(ascending=False)
+df6b = datapoint_6b.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns6b = sns.barplot(
+    data=df6b,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns6b.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Back-end Developers"
+)
+
+total6b = df6b['count'].sum()
+for element in sns6b.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total6b * 100
+    sns6b.text(
+        element.get_width() + total6b*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df6b['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout()
+
+# C: Degrees of full-stackers
+it_fields_c = filtered_it_fields[filtered_it_fields['field'] == 'Full-stack']
+datapoint_6c = it_fields_c['degree'].value_counts().sort_values(ascending=False)
+df6c = datapoint_6c.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns6c = sns.barplot(
+    data=df6c,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns6c.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Full-stack Developers"
+)
+
+total6c = df6c['count'].sum()
+for element in sns6c.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total6c * 100
+    sns6c.text(
+        element.get_width() + total6c*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df6c['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout() 
+
+# D: Degrees of data scientists
+it_fields_d = filtered_it_fields[filtered_it_fields['field'] == 'Data Science']
+datapoint_6d = it_fields_a['degree'].value_counts().sort_values(ascending=False)
+df6d = datapoint_6d.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns6d = sns.barplot(
+    data=df6d,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns6d.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Data Scientists"
+)
+
+total6d = df6d['count'].sum()
+for element in sns6d.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total6d * 100
+    sns6d.text(
+        element.get_width() + total6d*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df6d['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout() 
+
+# 7: Degrees of seniors (new SQL query)
+with open('IT_by_field_sr_jr.sql') as f:
+    it_fields_sr_jr_query = f.read()
+
+it_fields_sr_jr_query_result = pandasql.sqldf(it_fields_sr_jr_query, locals())
+filtered_it_fields_sr_jr = it_fields_sr_jr_query_result[
+    ~it_fields_sr_jr_query_result['level'].isin(['Unknown']) & ~it_fields_sr_jr_query_result['degree'].isin(['Unknown'])
+]
+
+it_fields_7 = filtered_it_fields_sr_jr[filtered_it_fields_sr_jr['level'] == 'Senior']
+datapoint_7 = it_fields_7['degree'].value_counts().sort_values(ascending=False)
+df7 = datapoint_7.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns7 = sns.barplot(
+    data=df7,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns7.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Senior Developers"
+)
+
+total7 = df7['count'].sum()
+for element in sns7.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total7 * 100
+    sns7.text(
+        element.get_width() + total7*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df7['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout()
+
+# 8: Degrees of juniors
+it_fields_8 = filtered_it_fields_sr_jr[filtered_it_fields_sr_jr['level'] == 'Junior']
+datapoint_8 = it_fields_8['degree'].value_counts().sort_values(ascending=False)
+df8 = datapoint_8.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns8 = sns.barplot(
+    data=df8,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns8.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Junior Developers"
+)
+
+total8 = df8['count'].sum()
+for element in sns8.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total8 * 100
+    sns8.text(
+        element.get_width() + total8*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df8['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout()
+
+# DATAPOINT 9: What spheres do people with legal degrees actually work in?
+with open('9_query.sql') as f:
+    nine_query = f.read()
+
+nine_query_result = pandasql.sqldf(nine_query, locals())
+filtered_nine_query = nine_query_result[
+    ~nine_query_result['field'].isin(['Unknown'])
+]
+
+datapoint_9 = filtered_nine_query['field'].value_counts().sort_values(ascending=False)
+df9 = datapoint_9.reset_index().rename(columns={"index": 'field', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns9 = sns.barplot(
+    data=df9,
+    y='field',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns9.set(
+    xlabel="Number of People",
+    ylabel="Field",
+    title="Fields of Work for Law Graduates"
+)
+
+total9 = df9['count'].sum()
+for element in sns9.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total9 * 100
+    sns9.text(
+        element.get_width() + total9*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df9['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout()
+
+# Run
+plt.show()
