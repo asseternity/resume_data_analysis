@@ -15,6 +15,7 @@ SELECT
         OR exp.title LIKE "%full-stack%" THEN "Full-Stack"
         WHEN exp.title LIKE "%back-end%"
         OR exp.title LIKE "%backend%" 
+        OR exp.title LIKE "%back end%" 
         OR exp.title LIKE "%java %" 
         OR exp.title LIKE "%.net%" THEN "Back-End"
         WHEN exp.title LIKE "%data%" 

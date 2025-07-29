@@ -516,5 +516,18 @@ for element in sns9.patches:
 plt.xlim(0, df9['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout()
 
+# What is other in df9
+filtered_nine_inv_query = nine_query_result[
+    nine_query_result['field'].isin(['Other'])
+]
+datapoint_10 = filtered_nine_inv_query['title'].value_counts().sort_values(ascending=False)
+df10 = datapoint_10.reset_index().rename(columns={"index": 'title', 0: 'count'})
+print(df10)
+
+# Maybe I filter the degrees wrong?
+datapoint_11 = filtered_nine_query['program'].value_counts().sort_values(ascending=False)
+df11 = datapoint_11.reset_index().rename(columns={"index": 'program', 0: 'count'})
+print(df11)
+
 # Run
 plt.show()

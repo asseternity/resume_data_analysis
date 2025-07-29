@@ -101,6 +101,8 @@ WHERE
     OR exp.title LIKE '%backend%'
     OR exp.title LIKE '%fullstack%'
     OR exp.title LIKE '%front-end%'
+    OR exp.title LIKE '%front end%'
+    OR exp.title LIKE '%back end%'
     OR exp.title LIKE '%back-end%'
     OR exp.title LIKE '%full-stack%'
     OR exp.title LIKE '%programme%'

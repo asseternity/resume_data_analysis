@@ -93,12 +93,14 @@ SELECT
     END AS 'degree',
     CASE
         WHEN exp.title LIKE '%front-end%' 
+        OR exp.title LIKE '%front end%'
         OR exp.title LIKE "%frontend%"  
         OR exp.title LIKE "%web develope%"  
         OR exp.title LIKE "%ux develope%"  
         OR exp.title LIKE "%ui develope%" THEN "Front-end"
         WHEN exp.title LIKE '%back-end%'   
         OR exp.title LIKE "%backend%"   
+        OR exp.title LIKE "%back end%"   
         OR exp.title LIKE "%.net%"   
         OR exp.title LIKE "%java %"   
         OR exp.title LIKE "%C++%" THEN "Back-end"
