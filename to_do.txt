@@ -2,13 +2,17 @@
 [v] rename SQL files
 [v] rewrite comments throughout the main file
 - Turn inline comments into short section headers (e.g. # ─── Data Cleaning ───), so they stand out in Script mode.
-[_] create a new kaggle script-mode notebook
-[_] add data -> search for the existing data I used 
-[_] pin the dataset so it stays loaded even across commits
+[v] create a new kaggle script-mode notebook
+[v] add data -> search for the existing data I used 
+[v] pin the dataset so it stays loaded even across commits
 [_] upload
 - resume_data_cleaner.py
 - All .sql files (e.g. lawyers_degrees.sql, education_query.sql, etc.)
-[_] Markdown:
+[_] Copy-paste the contents of main.py into a series of code cells, breaking it up by logical sections:
+- Cell 1: Imports & dataset download
+- Cell 2: Data cleaning
+- Cell 3+: Each SQL + plotting block
+[_] Improve markdown for best viewing:
 - Project title & overview at top
 - Before each SQL block: a 1–2-line explanation
 - After each chart: a brief insight or “key takeaway”
