@@ -1,18 +1,23 @@
 """
-🚀 Resume Dataset Analysis
+# 🚀 Resume Dataset Analysis
 
-This notebook explores a structured résumé dataset to uncover:
-  1. Educational background distributions across tech roles
-  2. Career pathways of law graduates in IT
-  3. Degree profiles for junior vs. senior developers
-  4. Specialty fields within legal and tech professions
+**Author:** Asset Nakupov  
+**Date:** 2025-08-01  
 
-We combine SQL queries via pandasql for fast grouping and joins,
-then use pandas + Seaborn for data wrangling and visualization.
-Data cleaning is handled by our custom `resume_data_cleaner` module.
+---
 
-Author: Asset Nakupov • Date: 2025-08-01
+## Overview
 
+This notebook explores a structured resume dataset to uncover:
+
+1. **Educational background distributions** across tech roles  
+2. **Career pathways** of law graduates in IT  
+3. **Degree profiles** for junior vs. senior developers  
+4. **Specialty fields** within legal and tech professions  
+
+I combine SQL queries via `pandasql` for fast grouping and joins,  
+then use `pandas` + `seaborn` for data wrangling and visualization.  
+Data cleaning is handled by a custom `resume_data_cleaner` module.
 """
 
 ### STEP 1: SET UP ENVIRONMENT
