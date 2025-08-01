@@ -1,3 +1,20 @@
+"""
+🚀 Resume Dataset Analysis
+
+This notebook explores a structured résumé dataset to uncover:
+  1. Educational background distributions across tech roles
+  2. Career pathways of law graduates in IT
+  3. Degree profiles for junior vs. senior developers
+  4. Specialty fields within legal and tech professions
+
+We combine SQL queries via pandasql for fast grouping and joins,
+then use pandas + Seaborn for data wrangling and visualization.
+Data cleaning is handled by our custom `resume_data_cleaner` module.
+
+Author: Asset Nakupov • Date: 2025-08-01
+
+"""
+
 ### STEP 1: SET UP ENVIRONMENT
 
 import kagglehub
@@ -41,10 +58,10 @@ skills_table_clean = rdc.skills_data_cleaner(skills_table)
 ### USE SQL TO FIND COOL STUFF WITH  SOME NUMBERS
 ### USE PANDAS TO UNDERSTAND / COUNT / STATISTICS THE DATA
 
-# DATAPOINT 1: TOTALS
+# ─── 1. Developer Degree Distribution ─────────────────────
 
 # Apply the SQL query to count the number of people in each degree category
-with open('education_query.sql') as f:
+with open('sql/01_dev_degree_distribution.sql') as f:
     education_query = f.read()
 
 education_query_result = pandasql.sqldf(education_query, locals())
@@ -99,163 +116,10 @@ for element in sns1.patches:
 plt.xlim(0, df1['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout() 
 
-# DATAPOINT 2: WHAT FIELD OF IT DO LAWYERS GO TO?
-with open('only_lawyers.sql') as f:
-    only_lawyers_query = f.read()
+# ─── 2. IT Degrees by Role ──────────────────────
 
-only_lawyers_query_result = pandasql.sqldf(only_lawyers_query, locals())
-datapoint_2 = only_lawyers_query_result['field'].value_counts().sort_values(ascending=False)
-df2 = datapoint_2.reset_index().rename(columns={'index': 'field', 0: 'count'})
-
-plt.figure(figsize=(13, 7))
-sns2 = sns.barplot(
-    data=df2,
-    y='count',
-    x='field',
-    orient='v',
-    edgecolor="black"
-)
-
-sns2.set(
-    xlabel="Number of people",
-    ylabel="IT Field",
-    title="Fields of IT that Law Graduates Work In"
-)
-
-total2 = df2['count'].sum()
-for element in sns2.patches:
-    count = element.get_height()
-    percentage = count/total2 * 100
-    sns2.text(
-        element.get_x(),
-        count + df2['count'].max()*0.01,
-        f"{count} ({percentage:.1f}%)",
-        va="bottom", # vertical align
-    )
-
-plt.xticks(rotation=45, ha="right") # Rotate the x-axis labels
-plt.ylim(0, df2['count'].max() * 1.1)
-plt.tight_layout()
-
-# DATAPOINT 3: THE OPPOSITE OF 1 - WHAT DEGREES DO PEOPLE WORKING IN LAW HAVE?
-with open('lawyers_degrees.sql') as f:
-    lawyers_degrees_query = f.read()
-
-lawyers_degrees_query_result = pandasql.sqldf(lawyers_degrees_query, locals())
-filtered_lawyers_degrees = lawyers_degrees_query_result[
-    ~lawyers_degrees_query_result['degree'].isin(['Unknown'])
-]
-datapoint_3 = filtered_lawyers_degrees['degree'].value_counts().sort_values(ascending=False)
-df3 = datapoint_3.reset_index().rename(columns={"index": 'degree', 0: 'count'})
-
-plt.figure(figsize=(10, 5))
-sns3 = sns.barplot(
-    data=df3,
-    y='degree',
-    x='count',
-    orient='h',
-    edgecolor="black"
-)
-
-sns3.set(
-    xlabel="Number of People",
-    ylabel="Degree",
-    title="Ranked Degree Distribution for Legal Workers"
-)
-
-total3 = df3['count'].sum()
-for element in sns3.patches:
-    count = int(element.get_width()) # width of the bar in the bar chart = count
-    percentage = count/total3 * 100
-    sns3.text(
-        element.get_width() + total3*0.01, # x position
-        element.get_y() + element.get_height()/2, # y position
-        f"{count} ({percentage:.1f}%)",
-        va="center" # vertical align
-    )
-
-plt.xlim(0, df3['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
-plt.tight_layout() 
-
-# DATAPOINT 4: Why so many legal workers are with different degrees?
-with open('lawyers_jobs.sql') as f:
-    lawyers_jobs_query = f.read()
-
-lawyers_jobs_query_result = pandasql.sqldf(lawyers_jobs_query, locals())
-filtered_lawyers_jobs = lawyers_jobs_query_result[
-    ~lawyers_jobs_query_result['position'].isin(['Unknown']) & ~lawyers_degrees_query_result['degree'].isin(['Unknown'])
-]
-datapoint_4 = filtered_lawyers_jobs['position'].value_counts().sort_values(ascending=False)
-df4 = datapoint_4.reset_index().rename(columns={"index": 'position', 0: 'count'})
-
-plt.figure(figsize=(10, 5))
-sns4 = sns.barplot(
-    data=df4,
-    y='position',
-    x='count',
-    orient='h',
-    edgecolor="black"
-)
-
-sns4.set(
-    xlabel="Number of People",
-    ylabel="Position",
-    title="Positions of Legal Workers"
-)
-
-total4 = df4['count'].sum()
-for element in sns4.patches:
-    count = int(element.get_width()) # width of the bar in the bar chart = count
-    percentage = count/total4 * 100
-    sns4.text(
-        element.get_width() + total4*0.01, # x position
-        element.get_y() + element.get_height()/2, # y position
-        f"{count} ({percentage:.1f}%)",
-        va="center" # vertical align
-    )
-
-plt.xlim(0, df4['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
-plt.tight_layout() 
-
-# DATAPOINT 5: Now we remove secretaries, assistants and paralegals, and see what degrees lawyers have
-only_senior_lawyers = lawyers_jobs_query_result[
-    ~lawyers_jobs_query_result['position'].isin(['Unknown', 'Assistant', 'Secretary', 'Paralegal']) & ~lawyers_jobs_query_result['degree'].isin(['Unknown'])
-]
-datapoint_5 = only_senior_lawyers['degree'].value_counts().sort_values(ascending=False)
-df5 = datapoint_5.reset_index().rename(columns={"index": 'degree', 0: 'count'})
-
-plt.figure(figsize=(10, 5))
-sns5 = sns.barplot(
-    data=df5,
-    y='degree',
-    x='count',
-    orient='h',
-    edgecolor="black"
-)
-
-sns5.set(
-    xlabel="Number of People",
-    ylabel="Degree",
-    title="Degrees of Lawyers (without Paralegals, Secretaries and Assistants)"
-)
-
-total5 = df5['count'].sum()
-for element in sns5.patches:
-    count = int(element.get_width()) # width of the bar in the bar chart = count
-    percentage = count/total5 * 100
-    sns5.text(
-        element.get_width() + total5*0.01, # x position
-        element.get_y() + element.get_height()/2, # y position
-        f"{count} ({percentage:.1f}%)",
-        va="center" # vertical align
-    )
-
-plt.xlim(0, df5['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
-plt.tight_layout() 
-
-# DATAPOINT 6: Break down datapoint 1 by IT job: front-end, back-end, devops, etc.
 # SQL to group compute
-with open('IT_by_field.sql') as f:
+with open('sql/02a_it_roles_degree_by_field.sql') as f:
     it_fields_query = f.read()
 
 it_fields_query_result = pandasql.sqldf(it_fields_query, locals())
@@ -399,8 +263,8 @@ for element in sns6d.patches:
 plt.xlim(0, df6d['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout() 
 
-# 7: Degrees of seniors (new SQL query)
-with open('IT_by_field_sr_jr.sql') as f:
+# E. Senior Developer Degrees
+with open('sql/02b_it_degree_by_seniority.sql') as f:
     it_fields_sr_jr_query = f.read()
 
 it_fields_sr_jr_query_result = pandasql.sqldf(it_fields_sr_jr_query, locals())
@@ -441,7 +305,7 @@ for element in sns7.patches:
 plt.xlim(0, df7['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout()
 
-# 8: Degrees of juniors
+# F. Junior Developer Degrees
 it_fields_8 = filtered_it_fields_sr_jr[filtered_it_fields_sr_jr['level'] == 'Junior']
 datapoint_8 = it_fields_8['degree'].value_counts().sort_values(ascending=False)
 df8 = datapoint_8.reset_index().rename(columns={"index": 'degree', 0: 'count'})
@@ -475,8 +339,167 @@ for element in sns8.patches:
 plt.xlim(0, df8['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
 plt.tight_layout()
 
-# DATAPOINT 9: What spheres do people with legal degrees actually work in?
-with open('9_query.sql') as f:
+# ─── 3. Law Grads in IT Fields ──────────────────
+
+with open('sql/03_law_grads_it_fields.sql') as f:
+    only_lawyers_query = f.read()
+
+only_lawyers_query_result = pandasql.sqldf(only_lawyers_query, locals())
+datapoint_2 = only_lawyers_query_result['field'].value_counts().sort_values(ascending=False)
+df2 = datapoint_2.reset_index().rename(columns={'index': 'field', 0: 'count'})
+
+plt.figure(figsize=(13, 7))
+sns2 = sns.barplot(
+    data=df2,
+    y='count',
+    x='field',
+    orient='v',
+    edgecolor="black"
+)
+
+sns2.set(
+    xlabel="Number of people",
+    ylabel="IT Field",
+    title="Fields of IT that Law Graduates Work In"
+)
+
+total2 = df2['count'].sum()
+for element in sns2.patches:
+    count = element.get_height()
+    percentage = count/total2 * 100
+    sns2.text(
+        element.get_x(),
+        count + df2['count'].max()*0.01,
+        f"{count} ({percentage:.1f}%)",
+        va="bottom", # vertical align
+    )
+
+plt.xticks(rotation=45, ha="right") # Rotate the x-axis labels
+plt.ylim(0, df2['count'].max() * 1.1)
+plt.tight_layout()
+
+# ─── 4. Degrees of Legal Workers ───────────────
+
+with open('sql/04_law_grads_degree_breakdown.sql') as f:
+    lawyers_degrees_query = f.read()
+
+lawyers_degrees_query_result = pandasql.sqldf(lawyers_degrees_query, locals())
+filtered_lawyers_degrees = lawyers_degrees_query_result[
+    ~lawyers_degrees_query_result['degree'].isin(['Unknown'])
+]
+datapoint_3 = filtered_lawyers_degrees['degree'].value_counts().sort_values(ascending=False)
+df3 = datapoint_3.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns3 = sns.barplot(
+    data=df3,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns3.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Ranked Degree Distribution for Legal Workers"
+)
+
+total3 = df3['count'].sum()
+for element in sns3.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total3 * 100
+    sns3.text(
+        element.get_width() + total3*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df3['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout() 
+
+# ─── 5. Legal Worker Job Breakdown ─────────────
+
+with open('sql/05_law_grads_positions.sql') as f:
+    lawyers_jobs_query = f.read()
+
+lawyers_jobs_query_result = pandasql.sqldf(lawyers_jobs_query, locals())
+filtered_lawyers_jobs = lawyers_jobs_query_result[
+    ~lawyers_jobs_query_result['position'].isin(['Unknown']) & ~lawyers_degrees_query_result['degree'].isin(['Unknown'])
+]
+datapoint_4 = filtered_lawyers_jobs['position'].value_counts().sort_values(ascending=False)
+df4 = datapoint_4.reset_index().rename(columns={"index": 'position', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns4 = sns.barplot(
+    data=df4,
+    y='position',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns4.set(
+    xlabel="Number of People",
+    ylabel="Position",
+    title="Positions of Legal Workers"
+)
+
+total4 = df4['count'].sum()
+for element in sns4.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total4 * 100
+    sns4.text(
+        element.get_width() + total4*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df4['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout() 
+
+# ─── 6. Lawyers (Excl. Paralegals) Degrees ─────
+
+only_senior_lawyers = lawyers_jobs_query_result[
+    ~lawyers_jobs_query_result['position'].isin(['Unknown', 'Assistant', 'Secretary', 'Paralegal']) & ~lawyers_jobs_query_result['degree'].isin(['Unknown'])
+]
+datapoint_5 = only_senior_lawyers['degree'].value_counts().sort_values(ascending=False)
+df5 = datapoint_5.reset_index().rename(columns={"index": 'degree', 0: 'count'})
+
+plt.figure(figsize=(10, 5))
+sns5 = sns.barplot(
+    data=df5,
+    y='degree',
+    x='count',
+    orient='h',
+    edgecolor="black"
+)
+
+sns5.set(
+    xlabel="Number of People",
+    ylabel="Degree",
+    title="Degrees of Lawyers (without Paralegals, Secretaries and Assistants)"
+)
+
+total5 = df5['count'].sum()
+for element in sns5.patches:
+    count = int(element.get_width()) # width of the bar in the bar chart = count
+    percentage = count/total5 * 100
+    sns5.text(
+        element.get_width() + total5*0.01, # x position
+        element.get_y() + element.get_height()/2, # y position
+        f"{count} ({percentage:.1f}%)",
+        va="center" # vertical align
+    )
+
+plt.xlim(0, df5['count'].max() * 1.3) # xlim() sets the beginning and end of the x axis. This extends x-axis limit to give space for labels
+plt.tight_layout() 
+
+# ─── 7. Law Grads’ Work Fields ──────────────────
+
+with open('sql/07_law_grads_work_fields.sql') as f:
     nine_query = f.read()
 
 nine_query_result = pandasql.sqldf(nine_query, locals())

@@ -1,0 +1,18 @@
+[v] write a draft intro
+[v] rename SQL files
+[v] rewrite comments throughout the main file
+- Turn inline comments into short section headers (e.g. # ─── Data Cleaning ───), so they stand out in Script mode.
+[_] create a new kaggle script-mode notebook
+[_] add data -> search for the existing data I used 
+[_] pin the dataset so it stays loaded even across commits
+[_] upload
+- resume_data_cleaner.py
+- All .sql files (e.g. lawyers_degrees.sql, education_query.sql, etc.)
+[_] Markdown:
+- Project title & overview at top
+- Before each SQL block: a 1–2-line explanation
+- After each chart: a brief insight or “key takeaway”
+- “Key Takeaways” section at the very end with bullet points of your main findings—great for skimmers.
+[_] Save & Run
+[_] Commit & Publish
+[_] choose 2–3 relevant tags (e.g. SQL, Seaborn, Data Cleaning) so your project surfaces in searches.
