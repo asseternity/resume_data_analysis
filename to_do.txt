@@ -5,13 +5,14 @@
 [v] create a new kaggle script-mode notebook
 [v] add data -> search for the existing data I used 
 [v] pin the dataset so it stays loaded even across commits
-[_] upload
-- resume_data_cleaner.py
-- All .sql files (e.g. lawyers_degrees.sql, education_query.sql, etc.)
-[_] Copy-paste the contents of main.py into a series of code cells, breaking it up by logical sections:
+[v] Copy-paste the contents of main.py into a series of code cells, breaking it up by logical sections:
 - Cell 1: Imports & dataset download
 - Cell 2: Data cleaning
 - Cell 3+: Each SQL + plotting block
+[v] upload
+- resume_data_cleaner.py
+- All .sql files (e.g. lawyers_degrees.sql, education_query.sql, etc.)
+[_] Address error
 [_] Improve markdown for best viewing:
 - Project title & overview at top
 - Before each SQL block: a 1–2-line explanation
@@ -20,3 +21,4 @@
 [_] Save & Run
 [_] Commit & Publish
 [_] choose 2–3 relevant tags (e.g. SQL, Seaborn, Data Cleaning) so your project surfaces in searches.
+[_] reference on personal website
