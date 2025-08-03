@@ -15,10 +15,11 @@
 [v] Address error
 [v] Save & Run
 [v] Commit & Publish
-[_] Improve markdown for best viewing:
+[v] Improve markdown for best viewing:
 - Project title & overview at top
 - Before each SQL block: a 1–2-line explanation
-- After each chart: a brief insight or “key takeaway”
+[v] choose 2–3 relevant tags (e.g. SQL, Seaborn, Data Cleaning) so your project surfaces in searches.
+[_] Conclusions
+- After each chart a markdown section: a brief insight or “key takeaway”
 - “Key Takeaways” section at the very end with bullet points of your main findings—great for skimmers.
-[_] choose 2–3 relevant tags (e.g. SQL, Seaborn, Data Cleaning) so your project surfaces in searches.
 [_] reference on personal website
