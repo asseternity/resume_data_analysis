@@ -19,7 +19,7 @@
 - Project title & overview at top
 - Before each SQL block: a 1–2-line explanation
 [v] choose 2–3 relevant tags (e.g. SQL, Seaborn, Data Cleaning) so your project surfaces in searches.
-[_] Conclusions
+[v] Conclusions
 - After each chart a markdown section: a brief insight or “key takeaway”
 - “Key Takeaways” section at the very end with bullet points of your main findings—great for skimmers.
-[_] reference on personal website
+[v] reference on personal website
